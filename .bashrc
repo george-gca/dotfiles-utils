@@ -155,6 +155,12 @@ if hash pipenv 2>/dev/null; then
     eval "$(pipenv --completion)"
 fi
 
+# enable rbenv
+if [ -d "$HOME/.rbenv/" ]; then
+    export PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init - bash)"
+fi
+
 # enable thefuck - corrects your previous console command
 if (hash fuck 2>/dev/null); then
     eval $(thefuck --alias)

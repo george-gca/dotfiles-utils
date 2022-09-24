@@ -180,7 +180,7 @@ if [[ $_arg_highlight == "on" ]] ; then
   if hash highlight 2>/dev/null; then
     sed "${_arg_line_number}q;d" $_arg_file | highlight --syntax "$_arg_language" -O ansi
   else
-    echo -e "Syntax highlight not supported. Please install highlight via\nsudo apt install highlight"
+    echo -e "Syntax highlight not supported. Please install highlight via\n\tsudo apt install highlight"
   fi
 else
   sed "${_arg_line_number}q;d" $_arg_file
