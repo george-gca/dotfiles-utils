@@ -1,0 +1,11 @@
+set autoindent
+set functioncolor green
+set keycolor cyan
+set linenumbers
+set mouse
+set numbercolor cyan
+set selectedcolor brightwhite,magenta
+set smarthome
+set statuscolor brightwhite,green
+set tabsize 4
+set titlecolor brightwhite,blue

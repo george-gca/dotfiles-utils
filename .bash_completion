@@ -1,0 +1,29 @@
+_ssh()
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts=$(grep '^Host' ~/.ssh/config ~/.ssh/config.d/* 2>/dev/null | grep -v '[?*]' | cut -d ' ' -f 2-)
+
+    COMPREPLY=( $(compgen -W "$opts" -- ${cur}) )
+    return 0
+}
+
+function _compl_hosts_first()
+{
+        case $COMP_CWORD in
+        1) _ssh;;
+        *) COMPREPLY=();;
+        esac
+}
+
+complete -o default -F _compl_hosts_first copy_from_host
+complete -o default -F _compl_hosts_first copy_to_host
+complete -o default -F _compl_hosts_first launch_ai_docstring_docker_remote
+complete -o default -F _compl_hosts_first launch_jupyter_docker_remote
+complete -o default -F _compl_hosts_first launch_jupyter_remote
+complete -o default -F _compl_hosts_first launch_tensorboard_docker_remote
+complete -o default -F _compl_hosts_first launch_tensorboard_remote
+
+complete -F _ssh login_remote_host
