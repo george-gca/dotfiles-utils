@@ -210,6 +210,7 @@ $PIP_INSTALL ipython
 # $PIP_INSTALL ipdb
 # $PIP_INSTALL jupyter
 # $PIP_INSTALL jupyterlab
+$PIP_INSTALL mu-repo
 $PIP_INSTALL pip
 # $PIP_INSTALL pipenv
 # $PIP_INSTALL prettytable  # print easy to read tables
