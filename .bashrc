@@ -161,6 +161,11 @@ if [ -d "$HOME/.rbenv/" ]; then
     eval "$(rbenv init - bash)"
 fi
 
+# enable starship prompt
+if hash starship 2>/dev/null; then
+    eval "$(starship init bash)"
+fi
+
 # enable thefuck - corrects your previous console command
 if (hash fuck 2>/dev/null); then
     eval $(thefuck --alias)

@@ -34,3 +34,7 @@ $GSET org.gnome.desktop.peripherals.mouse natural-scroll true
 $GSET org.gnome.desktop.interface show-battery-percentage true
 $GSET org.gnome.settings-daemon.plugins.color night-light-enabled true
 $GSET org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
+
+
+## Install Starship prompt
+curl -sS https://starship.rs/install.sh | sh -s -- -b ~/.local/bin
