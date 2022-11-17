@@ -1,6 +1,9 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# Move the time to the beginning of the 1st line
+format = "$time$all"
+
 # Disable the package module, hiding it from the prompt completely
 [package]
 disabled = true
