@@ -170,9 +170,9 @@ sudo mv completions_bash /usr/share/bash-completion/completions/tldr
 
 ## Install downloading binary file
 # up - Ultimate Plumber is a tool for writing Linux pipes with instant live preview
-site=$(get_latest_github_release_no_v "akavel/up" "up")
-aria2c -c --summary-interval 0 -d $USR_BIN $site
-chmod +x $USR_BIN/up
+# site=$(get_latest_github_release_no_v "akavel/up" "up")
+# aria2c -c --summary-interval 0 -d $USR_BIN $site
+# chmod +x $USR_BIN/up
 
 
 ## Installs via snaps
