@@ -20,22 +20,7 @@ USR_BIN="$HOME/bin"
 
 
 ## Auxiliary functions
-get_latest_github_release() {
-  # usage: get_latest_release "user/repo" "prefix" "suffix"
-  version=$(curl --silent "https://api.github.com/repos/$1/releases/latest" |  # Get latest release from GitHub api
-    grep '"tag_name":' |                                             # Get tag line
-    sed -E 's/.*"([^"]+)".*/\1/')                                    # Pluck JSON value
-  version_no_v=$(echo $version | sed -e "s/v//g")
-  echo "https://github.com/$1/releases/download/$version/"$2"$version_no_v"$3
-}
-
-get_latest_github_release_no_v() {
-  # usage: get_latest_release "user/repo" "prefix" "suffix"
-  version=$(curl --silent "https://api.github.com/repos/$1/releases/latest" |  # Get latest release from GitHub api
-    grep '"tag_name":' |                                             # Get tag line
-    sed -E 's/.*"([^"]+)".*/\1/')                                    # Pluck JSON value
-  echo "https://github.com/$1/releases/download/$version/"$2
-}
+. install_functions.sh
 
 
 ## Create templates for common file types in right click context menu in nautilus
