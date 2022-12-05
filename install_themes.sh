@@ -58,6 +58,6 @@ $GSET org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
 
 
 ## Install and configure Starship prompt
-curl -sS https://starship.rs/install.sh | sh -s -- -b ~/.local/bin
+curl -sS https://starship.rs/install.sh | sh -s -- -y -b ~/.local/bin
 cp starship.toml $HOME/.config/
 $GSET org.gnome.desktop.interface monospace-font-name 'UbuntuMono Nerd Font Mono 12'
