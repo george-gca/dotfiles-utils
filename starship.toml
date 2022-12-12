@@ -15,6 +15,7 @@ format = '🕙 [$time]($style) '
 # Add gnu screen session name
 [custom.gnu_screen]
 command = "echo ${STY#[0-9]*.}" # shows output of command
-format = "[\\[$symbol $output\\]]($style) "
-symbol = ""
-when = """ test -n "$STY" """
+description = "Display a monitor glyph and the session name if we're in a gnu screen session."
+format = "[$symbol $output]($style) "
+symbol = "🖵 "
+when = """ test "$STY" """
