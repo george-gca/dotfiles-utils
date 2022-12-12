@@ -2,7 +2,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 # Move the time to the beginning of the 1st line
-format = "$time$all"
+format = "$time$custom$all"
 
 # Disable the package module, hiding it from the prompt completely
 [package]
@@ -11,3 +11,10 @@ disabled = true
 [time]
 disabled = false
 format = '🕙 [$time]($style) '
+
+# Add gnu screen session name
+[custom.gnu_screen]
+command = "echo ${STY#[0-9]*.}" # shows output of command
+format = "[\\[$symbol $output\\]]($style) "
+symbol = ""
+when = """ test -n "$STY" """
