@@ -46,6 +46,9 @@ alias fd=fdfind
 # exa default options
 alias exa='exa --icons --group-directories-first'
 
+# rclone alias to always show downloading files
+alias rclone='rclone -v'
+
 # Telegram send end of command alias
 # usage: sleep 10; tg
 alias tg='telegram-send "$([ $? = 0 ] && echo "" || echo "error: ") $(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*tg$//'\'')"'
