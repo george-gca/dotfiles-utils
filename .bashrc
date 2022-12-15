@@ -125,6 +125,9 @@ if grep -qE "(Microsoft|WSL)" /proc/version &> /dev/null ; then
     # https://sourceforge.net/projects/vcxsrv/
     export DISPLAY=:0
 
+    # fix support for running remote GUI software with XMing
+    # export DISPLAY=localhost:0.0
+
     # change ugly green background color in folders for purple (more readable)
     export LS_COLORS="$LS_COLORS:ow=1;34;35"
 fi
@@ -143,6 +146,16 @@ fi
 if [ -d "/usr/share/doc/fzf/examples/" ]; then
     . /usr/share/doc/fzf/examples/key-bindings.bash
     # . /usr/share/doc/fzf/examples/completion.bash
+elif [ -f $HOME/.fzf.bash ]; then
+    . $HOME/.fzf.bash
+elif [ -d "$HOME/.fzf" ]; then
+    . $HOME/.fzf/completion.bash
+    . $HOME/.fzf/key-bindings.bash
+fi
+
+# enable java
+if hash java 2>/dev/null; then
+    JAVA_HOME=/usr
 fi
 
 # enable navi - an interactive cheatsheet tool for the command-line
