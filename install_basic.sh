@@ -2,7 +2,7 @@
 # Created by: George Araújo (george.gcac@gmail.com)
 # Currently for Ubuntu 22.04 LTS (Jammy Jellyfish)
 
-## Install commands to use
+##### Install commands to use #####
 ADD_APT_REPO="sudo add-apt-repository -y"
 ADD_PUBLIC_KEY="sudo tee /usr/share/keyrings"
 APT_INSTALL="sudo apt install -y"
@@ -19,23 +19,23 @@ SNAP_INSTALL="sudo snap install"
 USR_BIN="$HOME/bin"
 
 
-## Auxiliary functions
+##### Auxiliary functions #####
 . install_functions.sh
 
 
-## Create templates for common file types in right click context menu in nautilus
+##### Create templates for common file types in right click context menu in nautilus #####
 touch ~/Templates/Empty\ Document
 echo -e '#!/bin/bash\n' > ~/Templates/Empty\ Bash\ Script.sh
 echo -e '#!/usr/bin/python3\n# -*- coding: utf-8 -*-\n' > ~/Templates/Empty\ Python\ Script.py
 touch ~/Templates/Empty\ Python\ File.py
 
 
-## Copy bin/ folder to home and make the scripts executable
+##### Copy bin/ folder to home and make the scripts executable #####
 cp -r bin $HOME
 chmod +x $HOME/bin/*
 
 
-## Adding repos
+##### Adding repos #####
 # Graphic drivers
 $ADD_APT_REPO ppa:graphics-drivers/ppa
 
@@ -60,7 +60,7 @@ $ADD_APT_REPO ppa:gerardpuig/ppa
 # $ADD_APT_REPO "deb [arch=i386,amd64] http://repo.vivaldi.com/stable/deb/ stable main"
 
 
-## Installs via apt
+##### Installs via apt #####
 sudo apt update -y
 $APT_INSTALL aria2  # download manager
 $APT_INSTALL autossh  # automatically retry ssh connection
@@ -125,14 +125,10 @@ $APT_INSTALL ubuntu-cleaner
 # $APT_INSTALL vivaldi-stable
 
 
-## Install via dpkg
+##### Install via dpkg #####
 # bottom - yet another cross-platform graphical process/system monitor
 site=$(get_latest_github_release "ClementTsang/bottom" "bottom_" "_amd64.deb")
 $DOWNLOAD_FILE $site; $DPKG_INSTALL $DEFAULT_DEB_NAME; rm $DEFAULT_DEB_NAME
-
-# Dua - view disk space usage and delete unwanted data, fast
-curl -LSfs https://raw.githubusercontent.com/byron/dua-cli/master/ci/install.sh | \
-    sh -s -- --git byron/dua-cli --target x86_64-unknown-linux-musl --crate dua
 
 # Delta - a viewer for git and diff output
 site=$(get_latest_github_release "dandavison/delta" "git-delta_" "_amd64.deb")
@@ -153,9 +149,8 @@ $DOWNLOAD_FILE $site; $DPKG_INSTALL $DEFAULT_DEB_NAME; rm $DEFAULT_DEB_NAME
 $ADD_APT_REPO universe
 $APT_INSTALL libfuse2
 
-# Poetry Python Dependency Manager
-curl -sSL https://install.python-poetry.org | python3 -
 
+##### Install downloading binary file #####
 # tealdeer - a very fast implementation of tldr in Rust
 site=$(get_latest_github_release_no_v "dbrgn/tealdeer" "tealdeer-linux-x86_64-musl")
 aria2c -c --summary-interval 0 -d $USR_BIN $site
@@ -168,14 +163,30 @@ site=$(get_latest_github_release_no_v "dbrgn/tealdeer" "completions_bash")
 aria2c -c --summary-interval 0 -d . $site
 sudo mv completions_bash /usr/share/bash-completion/completions/tldr
 
-## Install downloading binary file
 # up - Ultimate Plumber is a tool for writing Linux pipes with instant live preview
 # site=$(get_latest_github_release_no_v "akavel/up" "up")
 # aria2c -c --summary-interval 0 -d $USR_BIN $site
 # chmod +x $USR_BIN/up
 
 
-## Installs via snaps
+##### Install via installation script #####
+# Dua - view disk space usage and delete unwanted data, fast
+curl -LSfs https://raw.githubusercontent.com/byron/dua-cli/master/ci/install.sh | \
+    sh -s -- --git byron/dua-cli --target x86_64-unknown-linux-musl --crate dua
+
+# Node Version Manager
+site=$(get_latest_github_raw_no_v "nvm-sh/nvm" "install.sh")
+curl -o- $site | bash
+
+# Node (latest version)
+. $HOME/.bashrc
+nvm install $(nvm ls-remote | grep -i latest | tail -n 1 | sed -ne 's/[^v0-9]*\(\([0-9]*\.\)\{0,4\}[0-9][^.]\).*/\1/p' | xargs)
+
+# Poetry Python Dependency Manager
+curl -sSL https://install.python-poetry.org | python3 -
+
+
+##### Installs via snaps #####
 $SNAP_INSTALL code --classic  # vscode
 $SNAP_INSTALL htop
 $SNAP_INSTALL indicator-sound-switcher
@@ -189,7 +200,7 @@ $SNAP_INSTALL vlc
 sudo snap refresh
 
 
-## Install via pip
+##### Install via pip #####
 # $PIP_INSTALL colorama  # colorful print
 $PIP_INSTALL ipython
 # $PIP_INSTALL ipdb
@@ -204,17 +215,17 @@ $PIP_INSTALL thefuck  # corrects your previous console command
 $PIP_INSTALL tqdm
 
 
-## Install via cargo
+##### Install via cargo #####
 # $CARGO_INSTALL --locked navi  # an interactive cheatsheet tool for the command-line
 # navi repo add denisidoro/cheats
 
 
-## Upgrade packages and remove unecessary ones
+##### Upgrade packages and remove unecessary ones #####
 sudo apt -y upgrade
 sudo apt -y autoremove
 
 
-## Configure flameshot as the default action for PrtScn key
+##### Configure flameshot as the default action for PrtScn key #####
 # https://askubuntu.com/questions/1036473/ubuntu-18-how-to-change-screenshot-application-to-flameshot
 # Release the PrtScr binding
 # $GSET org.gnome.settings-daemon.plugins.media-keys screenshot '[]'
@@ -231,8 +242,8 @@ sudo apt -y autoremove
 # sudo sh -c 'echo GTK_IM_MODULE=cedilla >> /etc/environment'
 
 
-## Configure git
+##### Configure git #####
 bash config_git.sh
 
-## Configure themes
+##### Configure themes #####
 bash install_themes.sh
