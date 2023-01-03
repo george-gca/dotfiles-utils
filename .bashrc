@@ -12,27 +12,31 @@ esac
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
-shopt -s histappend
-
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000
 HISTFILESIZE=20000
+
+# Save multiline commands in history
+shopt -s cmdhist
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-shopt -s globstar
-
-# Save multiline commands in history
-shopt -s cmdhist
+# If set, Bash replaces directory names with the results of word expansion
+# when performing filename completion
+shopt -s direxpand
 
 # If set, Bash attempts spelling correction on directory names during
 # word completion if the directory name initially supplied does not exist.
 shopt -s dirspell
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+shopt -s globstar
+
+# append to the history file, don't overwrite it
+shopt -s histappend
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
