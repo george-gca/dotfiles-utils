@@ -1,6 +1,6 @@
 #!/bin/bash
 # Created by: George Araújo (george.gcac@gmail.com)
-# Currently for Ubuntu 22.04 LTS (Jammy Jellyfish)
+# Currently for Ubuntu 23.04 (Lunar Lobster)
 
 ## Install commands to use
 ADD_APT_REPO="sudo add-apt-repository -y"

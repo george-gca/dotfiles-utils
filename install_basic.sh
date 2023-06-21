@@ -1,6 +1,6 @@
 #!/bin/bash
 # Created by: George Araújo (george.gcac@gmail.com)
-# Currently for Ubuntu 22.04 LTS (Jammy Jellyfish)
+# Currently for Ubuntu 23.04 (Lunar Lobster)
 
 ##### Install commands to use #####
 ADD_APT_REPO="sudo add-apt-repository -y"
@@ -14,7 +14,8 @@ DEB_INSTALL="sudo apt install -y"
 GET_PUBLIC_KEY="wget -qO-"
 GIT_CLONE="git clone --depth 1"
 GSET="gsettings set"
-PIP_INSTALL="python3 -m pip install --user --upgrade"
+PIP_INSTALL="python3 -m pip install --upgrade"
+PIPX_INSTALL="pipx install"
 SNAP_INSTALL="sudo snap install"
 USR_BIN="$HOME/bin"
 
@@ -37,7 +38,7 @@ chmod +x $HOME/bin/*
 
 ##### Adding repos #####
 # Graphic drivers
-$ADD_APT_REPO ppa:graphics-drivers/ppa
+# $ADD_APT_REPO ppa:graphics-drivers/ppa
 
 # Google Chrome
 $GET_PUBLIC_KEY https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /usr/share/keyrings/google-chrome.gpg
@@ -78,7 +79,7 @@ $APT_INSTALL fd-find  # A simple, fast and user-friendly alternative to 'find'
 # $APT_INSTALL flameshot  # screenshots
 $APT_INSTALL fzf  # A command-line fuzzy finder
 $APT_INSTALL gdu  # Disk usage analyzer (ncdu) with console interface written in Go
-$APT_INSTALL gedit-plugins
+# $APT_INSTALL gedit-plugins
 $APT_INSTALL gnome-shell-extensions
 $APT_INSTALL gnome-tweaks
 $APT_INSTALL google-chrome-stable
@@ -91,6 +92,7 @@ $APT_INSTALL meld  # diff tool
 $APT_INSTALL micro  # a modern and intuitive terminal-based text editor
 $APT_INSTALL net-tools  # ifconfig
 $APT_INSTALL nnn  # the missing terminal file manager for X
+$APT_INSTALL pipx  # install and run python applications in isolated environments
 # $APT_INSTALL python3-gpg  # Dropbox verification of files
 $APT_INSTALL python3-dev
 $APT_INSTALL python3-pip
@@ -206,12 +208,12 @@ $PIP_INSTALL ipython
 # $PIP_INSTALL ipdb
 # $PIP_INSTALL jupyter
 # $PIP_INSTALL jupyterlab
-$PIP_INSTALL mu-repo
-$PIP_INSTALL pip
+$PIPX_INSTALL mu-repo
+# $PIP_INSTALL pip
 # $PIP_INSTALL pipenv
 # $PIP_INSTALL prettytable  # print easy to read tables
-$PIP_INSTALL telegram-send
-$PIP_INSTALL thefuck  # corrects your previous console command
+$PIPX_INSTALL telegram-send
+$PIPX_INSTALL thefuck  # corrects your previous console command
 $PIP_INSTALL tqdm
 
 
