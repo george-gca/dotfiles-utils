@@ -167,9 +167,21 @@ if (hash navi 2>/dev/null); then
     eval "$(navi widget bash)"
 fi
 
+# enable node version manager
+if [ -d "$HOME/.nvm" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
+
 # enable pipenv
 if hash pipenv 2>/dev/null; then
-    eval "$(pipenv --completion)"
+    eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
+fi
+
+# enable pipx autocomplete
+if hash pipx 2>/dev/null; then
+    eval "$(register-python-argcomplete pipx)"
 fi
 
 # enable rbenv
