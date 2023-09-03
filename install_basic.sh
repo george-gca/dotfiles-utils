@@ -247,5 +247,16 @@ sudo apt -y autoremove
 ##### Configure git #####
 bash config_git.sh
 
+
 ##### Configure themes #####
 bash install_themes.sh
+
+
+##### Install Ruby (needed for jekyll sites) #####
+$APT_INSTALL libssl-dev libyaml-dev
+$GIT_CLONE https://github.com/rbenv/rbenv.git $HOME/.rbenv
+. ~/.bashrc
+mkdir -p "$(rbenv root)"/plugins
+$GIT_CLONE https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
+rbenv install $(rbenv install -l | grep -v - | tail -1)
+
