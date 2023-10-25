@@ -30,3 +30,14 @@ get_latest_github_raw_no_v() {
   echo "https://raw.githubusercontent.com/$1/$version/"$2
 }
 
+get_latest_github_pre_release() {
+  # use it for when the link for the download has a version included in the name of the file and it is (possibly) a pre-release
+  # e.g.: version 0.14.0 for https://github.com/dandavison/delta/releases/download/0.14.0/git-delta_0.14.0_amd64.deb
+  # usage: get_latest_release "user/repo" "prefix" "suffix"
+  version=$(curl --silent "https://api.github.com/repos/$1/releases" |  # Get latest releases from GitHub api
+    grep '"tag_name":' |                                             # Get tag line
+    head -n1 |                                                       # Get first result from list
+    sed -E 's/.*"([^"]+)".*/\1/')                                    # Pluck JSON value
+  version_no_v=$(echo $version | sed -e "s/v//g")
+  echo "https://github.com/$1/releases/download/$version/"$2"$version_no_v"$3
+}
