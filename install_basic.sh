@@ -37,6 +37,16 @@ chmod +x $HOME/bin/*
 
 
 ##### Adding repos #####
+# brave browser
+$GET_PUBLIC_KEY https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" |\
+  sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+
+# eza - A modern, maintained replacement for ls
+$GET_PUBLIC_KEY https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo tee /usr/share/keyrings/gierens.asc
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/gierens.asc] http://deb.gierens.de stable main" |\
+  sudo tee /etc/apt/sources.list.d/gierens.list
+
 # Graphic drivers
 # $ADD_APT_REPO ppa:graphics-drivers/ppa
 
@@ -47,8 +57,7 @@ echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl
   sudo tee /etc/apt/sources.list.d/google-chrome.list
 
 # Signal Messenger
-$GET_PUBLIC_KEY https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
-cat signal-desktop-keyring.gpg | sudo tee -a /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
+$GET_PUBLIC_KEY https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg
 
 echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
   sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
@@ -66,13 +75,14 @@ sudo apt update -y
 $APT_INSTALL aria2  # download manager
 $APT_INSTALL autossh  # automatically retry ssh connection
 $APT_INSTALL bat  # cat with syntax highlight
+$APT_INSTALL brave-browser
 $APT_INSTALL build-essential   # essential tools to code
 $APT_INSTALL caffeine  # avoids locking screen when active
 # $APT_INSTALL cargo  # cargo is the Rust package manager, needed for the installation of other utilities
 $APT_INSTALL chrome-gnome-shell  # support gnome-shell extensions installation via Chrome
 $APT_INSTALL curl  # transfer data
 $APT_INSTALL deluge  # torrent client
-$APT_INSTALL exa  # a modern replacement for ‘ls’
+$APT_INSTALL eza  # a modern replacement for ‘ls’
 # recommended font for usage with exa icon support:
 # https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf?raw=true
 $APT_INSTALL fd-find  # A simple, fast and user-friendly alternative to 'find'
@@ -194,6 +204,7 @@ $SNAP_INSTALL htop
 $SNAP_INSTALL indicator-sound-switcher
 $SNAP_INSTALL lnav  # log file navigator
 $SNAP_INSTALL notepad-plus-plus  # text editor with macro support
+$SNAP_INSTALL pinta  # simple GTK Paint Program
 $SNAP_INSTALL procs  # a modern replacement for ps written in Rust
 $SNAP_INSTALL slack
 $SNAP_INSTALL spotify
