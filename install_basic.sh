@@ -21,6 +21,8 @@ SNAP_INSTALL="sudo snap install"
 SOFTWARE_DIR="$HOME/Software"
 USR_BIN="$HOME/bin"
 
+mkdir -p $SOFTWARE_DIR
+
 # endregion
 
 
@@ -66,18 +68,16 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/gierens.asc] http://deb.gier
 
 # Google Chrome
 $GET_PUBLIC_KEY https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /usr/share/keyrings/google-chrome.gpg
-
 echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main' |\
   sudo tee /etc/apt/sources.list.d/google-chrome.list
 
 # Signal Messenger
 $GET_PUBLIC_KEY https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg
-
 echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
   sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
 
 # Ubuntu Cleaner
-$ADD_APT_REPO ppa:gerardpuig/ppa
+# $ADD_APT_REPO ppa:gerardpuig/ppa
 
 # Vivaldi Web Browser
 # $GET_PUBLIC_KEY http://repo.vivaldi.com/stable/linux_signing_key.pub | $ADD_PUBLIC_KEY
@@ -114,13 +114,14 @@ $APT_INSTALL gstreamer1.0-plugins-bad
 $APT_INSTALL gstreamer1.0-plugins-base
 $APT_INSTALL gstreamer1.0-plugins-good
 # $APT_INSTALL gstreamer1.0-plugins-ugly
+$APT_INSTALL gufw # firewall gui
 # $APT_INSTALL lm-sensors  # show GPU core temperature
 $APT_INSTALL meld  # diff tool
 $APT_INSTALL micro  # a modern and intuitive terminal-based text editor
 $APT_INSTALL net-tools  # ifconfig
 $APT_INSTALL nnn  # the missing terminal file manager for X
 $APT_INSTALL pipx  # install and run python applications in isolated environments
-# $APT_INSTALL python3-gpg  # Dropbox verification of files
+$APT_INSTALL python3-gpg  # Dropbox verification of files
 $APT_INSTALL python3-dev
 $APT_INSTALL python3-pip
 $APT_INSTALL python3-tk
@@ -130,15 +131,13 @@ $APT_INSTALL ripgrep
 # in case of error with ripgrep, do
 # sudo dpkg --force-overwrite -i /var/cache/apt/archives/ripgrep*.deb
 $APT_INSTALL ssh
+$APT_INSTALL tealdeer  # a very fast implementation of tldr in Rust
 $APT_INSTALL texlive-full  # latex
 $APT_INSTALL tilix  # advanced GTK3 tiling terminal emulator
 $APT_INSTALL tlp tlp-rdw  # improve power usage on laptops
 $APT_INSTALL ubuntu-restricted-extras
 #$APT_INSTALL wine
 $APT_INSTALL zoxide  # A fast cd command that learns your habits
-
-# Firewall
-# $APT_INSTALL gufw
 
 # Language support
 $APT_INSTALL `check-language-support -l en`
@@ -148,7 +147,7 @@ $APT_INSTALL `check-language-support -l pt`
 $APT_INSTALL signal-desktop
 
 # Ubuntu Cleaner
-$APT_INSTALL ubuntu-cleaner
+# $APT_INSTALL ubuntu-cleaner
 
 # Vivaldi Web Browser
 # $APT_INSTALL vivaldi-stable
@@ -159,8 +158,8 @@ $APT_INSTALL ubuntu-cleaner
 # region Install via dpkg
 
 # bottom - yet another cross-platform graphical process/system monitor
-site=$(get_latest_github_release "ClementTsang/bottom" "bottom_" "_amd64.deb")
-$DOWNLOAD_FILE $site; $DPKG_INSTALL $DEFAULT_DEB_NAME; rm $DEFAULT_DEB_NAME
+# site=$(get_latest_github_release "ClementTsang/bottom" "bottom_" "_amd64.deb")
+# $DOWNLOAD_FILE $site; $DPKG_INSTALL $DEFAULT_DEB_NAME; rm $DEFAULT_DEB_NAME
 
 # Delta - a viewer for git and diff output
 site=$(get_latest_github_release "dandavison/delta" "git-delta_" "_amd64.deb")
@@ -186,17 +185,20 @@ $APT_INSTALL libfuse2
 
 # region Install downloading binary file
 
+# rclone - command-line program to manage files on cloud storage
+# curl https://rclone.org/install.sh | sudo bash
+
 # tealdeer - a very fast implementation of tldr in Rust
-site=$(get_latest_github_release_no_v "dbrgn/tealdeer" "tealdeer-linux-x86_64-musl")
-aria2c -c --summary-interval 0 -d $USR_BIN $site
-mv $USR_BIN/tealdeer-linux-x86_64-musl $USR_BIN/tldr
-chmod +x $USR_BIN/tldr
-$USR_BIN/tldr --update
+# site=$(get_latest_github_release_no_v "dbrgn/tealdeer" "tealdeer-linux-x86_64-musl")
+# aria2c -c --summary-interval 0 -d $USR_BIN $site
+# mv $USR_BIN/tealdeer-linux-x86_64-musl $USR_BIN/tldr
+# chmod +x $USR_BIN/tldr
+# $USR_BIN/tldr --update
 
 # tealdeer autocompletion for bash
-site=$(get_latest_github_release_no_v "dbrgn/tealdeer" "completions_bash")
-aria2c -c --summary-interval 0 -d . $site
-sudo mv completions_bash /usr/share/bash-completion/completions/tldr
+# site=$(get_latest_github_release_no_v "dbrgn/tealdeer" "completions_bash")
+# aria2c -c --summary-interval 0 -d . $site
+# sudo mv completions_bash /usr/share/bash-completion/completions/tldr
 
 # up - Ultimate Plumber is a tool for writing Linux pipes with instant live preview
 # site=$(get_latest_github_release_no_v "akavel/up" "up")
@@ -204,12 +206,12 @@ sudo mv completions_bash /usr/share/bash-completion/completions/tldr
 # chmod +x $USR_BIN/up
 
 # waveterm - An open-source, cross-platform terminal for seamless workflows
-site=$(get_latest_github_release "wavetermdev/waveterm" "waveterm-linux-x64-v" ".zip")
-aria2c -c --summary-interval 0 -d $SOFTWARE_DIR -o waveterm.zip $site
-cd $SOFTWARE_DIR
-unzip waveterm.zip
-rm waveterm.zip
-cd -
+# site=$(get_latest_github_release "wavetermdev/waveterm" "waveterm-linux-x64-v" ".zip")
+# aria2c -c --summary-interval 0 -d $SOFTWARE_DIR -o waveterm.zip $site
+# cd $SOFTWARE_DIR
+# unzip waveterm.zip
+# rm waveterm.zip
+# cd -
 
 # endregion
 
@@ -254,13 +256,14 @@ sudo snap refresh
 
 # region Install via pip
 
+$PIP_INSTALL pip
+$PIPX_INSTALL asreview
 # $PIP_INSTALL colorama  # colorful print
 $PIP_INSTALL ipython
 # $PIP_INSTALL ipdb
 # $PIP_INSTALL jupyter
 # $PIP_INSTALL jupyterlab
 $PIPX_INSTALL mu-repo
-# $PIP_INSTALL pip
 # $PIP_INSTALL pipenv
 # $PIP_INSTALL prettytable  # print easy to read tables
 $PIPX_INSTALL telegram-send
