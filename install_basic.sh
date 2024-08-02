@@ -1,6 +1,6 @@
 #!/bin/bash
 # Created by: George Araújo (george.gcac@gmail.com)
-# Currently for Ubuntu 23.04 (Lunar Lobster)
+# Currently for Ubuntu 24.04 (Noble Numbat)
 
 # region Install commands to use
 
@@ -100,7 +100,7 @@ $APT_INSTALL chrome-gnome-shell  # support gnome-shell extensions installation v
 $APT_INSTALL curl  # transfer data
 $APT_INSTALL deluge  # torrent client
 $APT_INSTALL eza  # a modern replacement for ‘ls’
-# recommended font for usage with exa icon support:
+# recommended font for usage with eza icon support:
 # https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf?raw=true
 $APT_INSTALL fd-find  # A simple, fast and user-friendly alternative to 'find'
 # $APT_INSTALL flameshot  # screenshots
@@ -119,10 +119,10 @@ $APT_INSTALL gufw # firewall gui
 $APT_INSTALL meld  # diff tool
 $APT_INSTALL micro  # a modern and intuitive terminal-based text editor
 $APT_INSTALL net-tools  # ifconfig
-$APT_INSTALL nnn  # the missing terminal file manager for X
+# $APT_INSTALL nnn  # the missing terminal file manager for X
 $APT_INSTALL pipx  # install and run python applications in isolated environments
-$APT_INSTALL python3-gpg  # Dropbox verification of files
 $APT_INSTALL python3-dev
+$APT_INSTALL python3-gpg  # Dropbox verification of files
 $APT_INSTALL python3-pip
 $APT_INSTALL python3-tk
 $APT_INSTALL python3-venv
@@ -206,12 +206,11 @@ $APT_INSTALL libfuse2
 # chmod +x $USR_BIN/up
 
 # waveterm - An open-source, cross-platform terminal for seamless workflows
-# site=$(get_latest_github_release "wavetermdev/waveterm" "waveterm-linux-x64-v" ".zip")
-# aria2c -c --summary-interval 0 -d $SOFTWARE_DIR -o waveterm.zip $site
-# cd $SOFTWARE_DIR
-# unzip waveterm.zip
-# rm waveterm.zip
-# cd -
+site=$(get_latest_github_release "wavetermdev/waveterm" "Wave-linux-x86_64-" ".AppImage")
+aria2c -c --summary-interval 0 -d $SOFTWARE_DIR -o Waveterm.AppImage $site
+cd $SOFTWARE_DIR
+chmod +x Waveterm.AppImage
+cd -
 
 # endregion
 
@@ -242,9 +241,9 @@ $SNAP_INSTALL code --classic  # vscode
 $SNAP_INSTALL htop
 $SNAP_INSTALL indicator-sound-switcher
 $SNAP_INSTALL lnav  # log file navigator
-$SNAP_INSTALL notepad-plus-plus  # text editor with macro support
+# $SNAP_INSTALL notepad-plus-plus  # text editor with macro support
 $SNAP_INSTALL pinta  # simple GTK Paint Program
-$SNAP_INSTALL procs  # a modern replacement for ps written in Rust
+# $SNAP_INSTALL procs  # a modern replacement for ps written in Rust
 $SNAP_INSTALL slack
 $SNAP_INSTALL spotify
 $SNAP_INSTALL telegram-desktop
