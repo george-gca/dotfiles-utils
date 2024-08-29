@@ -7,6 +7,7 @@
 # ARG_OPTIONAL_SINGLE([excludes_str],[],[strings to exclude from search (separated with spaces)])
 # ARG_OPTIONAL_BOOLEAN([files_with_matches],[l],[only print the paths with at least one match])
 # ARG_OPTIONAL_BOOLEAN([files_without_matches],[],[only print the paths that contain zero matches])
+# ARG_OPTIONAL_BOOLEAN([no_regex],[],[treat all patterns as literals])
 # ARG_OPTIONAL_BOOLEAN([ignore_case],[i],[ignore case])
 # ARG_POSITIONAL_SINGLE([search_str],[string to search],[])
 # ARG_POSITIONAL_SINGLE([path],[base directory to start search],[.])
@@ -56,6 +57,7 @@ _arg_excludes_files=
 _arg_excludes_str=
 _arg_files_with_matches="off"
 _arg_files_without_matches="off"
+_arg_no_regex="off"
 _arg_ignore_case="off"
 
 
@@ -65,7 +67,7 @@ _arg_ignore_case="off"
 print_help()
 {
 	printf '%s\n' "Search for string in directory excluding git, pycache, and given folders"
-	printf 'Usage: %s [--excludes_dirs <arg>] [--excludes_files <arg>] [--excludes_str <arg>] [-l|--(no-)files_with_matches] [--(no-)files_without_matches] [-i|--(no-)ignore_case] [-h|--help] <search_str> [<path>]\n' "$0"
+	printf 'Usage: %s [--excludes_dirs <arg>] [--excludes_files <arg>] [--excludes_str <arg>] [-l|--(no-)files_with_matches] [--(no-)files_without_matches] [--(no-)no_regex] [-i|--(no-)ignore_case] [-h|--help] <search_str> [<path>]\n' "$0"
 	printf '\t%s\n' "<search_str>: string to search"
 	printf '\t%s\n' "<path>: base directory to start search (default: '.')"
 	printf '\t%s\n' "--excludes_dirs: paths to exclude from search (separated with spaces) (no default)"
@@ -73,6 +75,7 @@ print_help()
 	printf '\t%s\n' "--excludes_str: strings to exclude from search (separated with spaces) (no default)"
 	printf '\t%s\n' "-l, --files_with_matches, --no-files_with_matches: only print the paths with at least one match (off by default)"
 	printf '\t%s\n' "--files_without_matches, --no-files_without_matches: only print the paths that contain zero matches (off by default)"
+	printf '\t%s\n' "--no_regex, --no-no_regex: treat all patterns as literals (off by default)"
 	printf '\t%s\n' "-i, --ignore_case, --no-ignore_case: ignore case (off by default)"
 	printf '\t%s\n' "-h, --help: Prints help"
 }
@@ -144,6 +147,11 @@ parse_commandline()
 			--no-files_without_matches|--files_without_matches)
 				_arg_files_without_matches="on"
 				test "${1:0:5}" = "--no-" && _arg_files_without_matches="off"
+				;;
+			# See the comment of option '--files_with_matches' to see what's going on here - principle is the same.
+			--no-no_regex|--no_regex)
+				_arg_no_regex="on"
+				test "${1:0:5}" = "--no-" && _arg_no_regex="off"
 				;;
 			# See the comment of option '--files_with_matches' to see what's going on here - principle is the same.
 			-i|--no-ignore_case|--ignore_case)
@@ -265,6 +273,10 @@ fi
 
 if [[ $_arg_ignore_case == "on" ]] ; then
     run_str+=" -i"
+fi
+
+if [[ $_arg_no_regex == "on" ]] ; then
+    run_str+=" -F"
 fi
 
 if [[ $_arg_files_with_matches == "on" ]] ; then
