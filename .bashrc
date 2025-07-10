@@ -174,6 +174,11 @@ if [ -d "$HOME/.nvm" ]; then
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 
+# enable pay-respects
+if hash pay-respects 2>/dev/null; then
+    eval "$(pay-respects bash --alias)"
+fi
+
 # enable pipenv
 if hash pipenv 2>/dev/null; then
     eval "$(_PIPENV_COMPLETE=bash_source pipenv)"

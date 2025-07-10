@@ -63,6 +63,11 @@ $GET_PUBLIC_KEY https://raw.githubusercontent.com/eza-community/eza/main/deb.asc
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/gierens.asc] http://deb.gierens.de stable main" |\
   sudo tee /etc/apt/sources.list.d/gierens.list
 
+# GitHub CLI
+$GET_PUBLIC_KEY https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" |\
+  sudo tee /etc/apt/sources.list.d/github-cli.list
+
 # Graphic drivers
 # $ADD_APT_REPO ppa:graphics-drivers/ppa
 
@@ -75,7 +80,7 @@ echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl
 $GET_PUBLIC_KEY https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg
 echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
   sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
-
+  
 # Ubuntu Cleaner
 # $ADD_APT_REPO ppa:gerardpuig/ppa
 
@@ -107,6 +112,7 @@ $APT_INSTALL fd-find  # A simple, fast and user-friendly alternative to 'find'
 $APT_INSTALL fzf  # A command-line fuzzy finder
 $APT_INSTALL gdu  # Disk usage analyzer (ncdu) with console interface written in Go
 # $APT_INSTALL gedit-plugins
+$APT_INSTALL gh # GitHub CLI
 $APT_INSTALL gnome-shell-extensions
 $APT_INSTALL gnome-tweaks
 $APT_INSTALL google-chrome-stable
@@ -177,8 +183,8 @@ $DOWNLOAD_FILE $site; $DPKG_INSTALL $DEFAULT_DEB_NAME; rm $DEFAULT_DEB_NAME
 # Mendeley Reference Manager
 # Install Dependencies
 # Download it from https://www.mendeley.com/download-reference-manager/linux
-$ADD_APT_REPO universe
-$APT_INSTALL libfuse2
+# $ADD_APT_REPO universe
+# $APT_INSTALL libfuse2
 
 # endregion
 
@@ -229,6 +235,9 @@ curl -o- $site | bash
 . $HOME/.bashrc
 nvm install $(nvm ls-remote | grep -i latest | tail -n 1 | sed -ne 's/[^v0-9]*\(\([0-9]*\.\)\{0,4\}[0-9][^.]\).*/\1/p' | xargs)
 
+# pay-respects - Command suggestions, command-not-found and thefuck replacement written in Rust
+curl -sSfL https://raw.githubusercontent.com/iffse/pay-respects/main/install.sh | sh
+
 # Poetry Python Dependency Manager
 curl -sSL https://install.python-poetry.org | python3 -
 
@@ -265,9 +274,9 @@ $PIP_INSTALL ipython
 $PIPX_INSTALL mu-repo
 # $PIP_INSTALL pipenv
 # $PIP_INSTALL prettytable  # print easy to read tables
-$PIPX_INSTALL telegram-send
-$PIPX_INSTALL thefuck  # corrects your previous console command
-$PIP_INSTALL tqdm
+# $PIPX_INSTALL telegram-send
+# $PIPX_INSTALL thefuck  # corrects your previous console command
+# $PIP_INSTALL tqdm
 
 # endregion
 
