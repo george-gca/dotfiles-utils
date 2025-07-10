@@ -52,6 +52,21 @@ aria2c -c --summary-interval 0 -d $USR_DL $site
 unzip -u $USR_DL/UbuntuMono.zip -d $USR_FONTS
 rm $USR_DL/UbuntuMono.zip
 
+## Icons
+# Dracula Icons
+aria2c -c --summary-interval 0 -d $USR_DL https://github.com/dracula/gtk/files/5214870/Dracula.zip 
+unzip -u $USR_DL/Dracula.zip -d $ICONS_DIR
+rm $USR_DL/Dracula.zip
+
+## Cursor icons
+# BreezeX Cursor
+# https://github.com/ful1e5/BreezeX_Cursor
+site=$(get_latest_github_release_no_v "ful1e5/BreezeX_Cursor" "BreezeX-Dark.tar.xz")
+aria2c -c --summary-interval 0 -d . $site
+tar -xvf BreezeX-Dark.tar.xz
+rm BreezeX-Dark.tar.xz
+mv BreezeX-* ~/.icons/
+
 ## Themes for softwares
 # gitk dracula theme
 aria2c -c --summary-interval 0 -d $USR_DL https://github.com/dracula/gitk/archive/master.zip
