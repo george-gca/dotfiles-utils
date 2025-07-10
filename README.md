@@ -25,6 +25,11 @@ Install and configure `git`, creating aliases and settings.
 
 Install the basic stuff I use on my pc as much as non-interactive as possible (only need to interact to provide sudo password and accept usage of Microsoft fonts). It calls internally `config_git.sh` and `install_themes.sh`.
 
+Run as:
+```bash
+bash install_basic.sh 2>&1 | tee install.log
+```
+
 ### install_themes.sh
 
 Install and configure my setup with some customization tools.
@@ -39,3 +44,11 @@ I prefer to set my configuration files more manually, than to do a [bare git set
 - .nanorc
 
 All the information inside is commented (for remembering sake).
+
+## Add support for new languages in meld and other GTK apps
+
+[Source](https://askubuntu.com/questions/1080074/meld-associate-file-extension-with-language-syntax-highlighting): edit the following file
+
+> /usr/share/gtksourceview-3.0/language-specs/cpp.lang
+
+Edit the `globs` section under `language/metadata/property` and add your extension.
