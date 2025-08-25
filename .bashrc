@@ -142,7 +142,7 @@ if [ -d "$HOME/.config/broot/launcher/bash/br" ] ; then
 fi
 
 # enable direnv - load and unload environment variables depending on the current directory
-if (hash direnv 2>/dev/null); then
+if hash direnv 2>/dev/null; then
     eval "$(direnv hook bash)"
 fi
 
@@ -163,7 +163,7 @@ if hash java 2>/dev/null; then
 fi
 
 # enable navi - an interactive cheatsheet tool for the command-line
-if (hash navi 2>/dev/null); then
+if hash navi 2>/dev/null; then
     eval "$(navi widget bash)"
 fi
 
@@ -200,13 +200,18 @@ if hash starship 2>/dev/null; then
     eval "$(starship init bash)"
 fi
 
-# enable thefuck - corrects your previous console command
-if (hash fuck 2>/dev/null); then
-    eval $(thefuck --alias)
+# enable uv - an extremely fast Python package and project manager, written in Rust
+if hash uv 2>/dev/null; then
+    eval "$(uv generate-shell-completion bash)"
+fi
+
+# enable uvx - uv specialized support for easily invoking and installing tools
+if hash uvx 2>/dev/null; then
+    eval "$(uvx --generate-shell-completion bash)"
 fi
 
 # enable zoxide - a fast cd command that learns your habits
-if (hash zoxide 2>/dev/null); then
+if hash zoxide 2>/dev/null; then
     eval "$(zoxide init bash)"
 fi
 
