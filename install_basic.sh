@@ -239,7 +239,10 @@ nvm install $(nvm ls-remote | grep -i latest | tail -n 1 | sed -ne 's/[^v0-9]*\(
 curl -sSfL https://raw.githubusercontent.com/iffse/pay-respects/main/install.sh | sh
 
 # Poetry Python Dependency Manager
-curl -sSL https://install.python-poetry.org | python3 -
+# curl -sSL https://install.python-poetry.org | python3 -
+
+# uv - An extremely fast Python package and project manager, written in Rust
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # endregion
 
